@@ -3,6 +3,7 @@
 class SuperAdmin::Devise::SessionsController < Devise::SessionsController
   def new
     self.resource = resource_class.new(sign_in_params)
+    @global_config = GlobalConfig.get('INSTALLATION_NAME')
   end
 
   def create
