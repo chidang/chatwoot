@@ -18,14 +18,14 @@ unless Rails.env.production?
   GlobalConfig.clear_cache
 
   account = Account.create!(
-    name: 'Acme Inc'
+    name: 'Flexatech Inc'
   )
 
   secondary_account = Account.create!(
-    name: 'Acme Org'
+    name: 'Flexatech Org'
   )
 
-  user = User.new(name: 'John', email: 'john@acme.inc', password: 'Password1!', type: 'SuperAdmin')
+  user = User.new(name: 'Flexa Admin', email: 'admin@flexacommerce.com', password: 'Password1!', type: 'SuperAdmin')
   user.skip_confirmation!
   user.save!
 
@@ -41,16 +41,16 @@ unless Rails.env.production?
     role: :administrator
   )
 
-  web_widget = Channel::WebWidget.create!(account: account, website_url: 'https://acme.inc')
+  web_widget = Channel::WebWidget.create!(account: account, website_url: 'https://flexacommerce.com')
 
-  inbox = Inbox.create!(channel: web_widget, account: account, name: 'Acme Support')
+  inbox = Inbox.create!(channel: web_widget, account: account, name: 'Flexatech Support')
   InboxMember.create!(user: user, inbox: inbox)
 
   contact_inbox = ContactInboxWithContactBuilder.new(
     source_id: user.id,
     inbox: inbox,
     hmac_verified: true,
-    contact_attributes: { name: 'jane', email: 'jane@example.com', phone_number: '+2320000' }
+    contact_attributes: { name: 'Chi Dang', email: 'chidang.dev@gmail.com', phone_number: '+84905648626' }
   ).perform
 
   conversation = Conversation.create!(
@@ -93,5 +93,5 @@ unless Rails.env.production?
   # csat
   Seeders::MessageSeeder.create_sample_csat_collect_message conversation
 
-  CannedResponse.create!(account: account, short_code: 'start', content: 'Hello welcome to chatwoot.')
+  CannedResponse.create!(account: account, short_code: 'start', content: 'Hello, welcome to Flexatech.')
 end
